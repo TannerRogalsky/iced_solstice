@@ -1,6 +1,6 @@
 use crate::program;
 use crate::Transformation;
-use bytemuck::Zeroable;
+use bytemuck::{Pod, Zeroable};
 use iced_graphics::layer;
 use iced_native::Rectangle;
 use solstice::{
@@ -11,7 +11,7 @@ use solstice::{
 
 const MAX_INSTANCES: usize = 100_000;
 
-#[derive(Copy, Clone, Debug, Vertex)]
+#[derive(Copy, Clone, Debug, Vertex, Pod, Zeroable)]
 #[repr(C)]
 struct Position {
     position: [f32; 2],
