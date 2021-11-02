@@ -1,6 +1,6 @@
 [package]
 name = "iced_solstice"
-version = "0.1.1-alpha.0"
+version = "0.1.1"
 authors = ["Tanner Rogalsky <tanner@tannerrogalsky.com>"]
 edition = "2021"
 license = "MIT"
