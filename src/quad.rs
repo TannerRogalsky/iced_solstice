@@ -112,7 +112,7 @@ impl Pipeline {
             self.current_transform = transformation;
         }
 
-        if scale != self.current_scale {
+        if (scale - self.current_scale).abs() > f32::EPSILON {
             gl.set_uniform_by_location(&self.scale_location, &RawUniformValue::Float(scale));
 
             self.current_scale = scale;

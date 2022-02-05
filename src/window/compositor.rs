@@ -11,8 +11,8 @@ pub struct Compositor {
 }
 
 impl iced_graphics::window::GLCompositor for Compositor {
-    type Settings = Settings;
     type Renderer = Renderer;
+    type Settings = Settings;
 
     unsafe fn new(
         settings: Self::Settings,
@@ -74,6 +74,7 @@ impl iced_graphics::window::GLCompositor for Compositor {
             gl,
             solstice::ClearSettings {
                 color: Some(clear_color.into()),
+                scissor: None,
                 ..Default::default()
             },
         );

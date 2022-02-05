@@ -2,12 +2,15 @@ use crate::quad;
 use crate::text;
 use crate::triangle;
 use crate::{Settings, Transformation, Viewport};
-use iced_graphics::backend;
 use iced_graphics::font;
 use iced_graphics::Layer;
 use iced_graphics::Primitive;
-use iced_native::mouse;
-use iced_native::{Font, HorizontalAlignment, Size, VerticalAlignment};
+use iced_graphics::{backend, Point};
+use iced_native::text::Hit;
+use iced_native::{
+    alignment::{Horizontal as HorizontalAlignment, Vertical as VerticalAlignment},
+    Font, Size,
+};
 
 /// A [`glow`] graphics backend for [`iced`].
 ///
@@ -40,25 +43,23 @@ impl Backend {
     ///
     /// The text provided as overlay will be rendered on top of the primitives.
     /// This is useful for rendering debug information.
-    pub fn draw<T: AsRef<str>>(
+    pub fn present<T: AsRef<str>>(
         &mut self,
         gl: &mut solstice::Context,
+        primitives: &[Primitive],
         viewport: &Viewport,
-        (primitive, mouse_interaction): &(Primitive, mouse::Interaction),
         overlay_text: &[T],
-    ) -> mouse::Interaction {
+    ) {
         let viewport_size = viewport.physical_size();
         let scale_factor = viewport.scale_factor() as f32;
         let projection = viewport.projection();
 
-        let mut layers = Layer::generate(primitive, viewport);
+        let mut layers = Layer::generate(primitives, viewport);
         layers.push(Layer::overlay(overlay_text, viewport));
 
         for layer in layers {
             self.flush(gl, scale_factor, projection, &layer, viewport_size.height);
         }
-
-        *mouse_interaction
     }
 
     fn flush(
@@ -138,7 +139,6 @@ impl Backend {
                             VerticalAlignment::Center => solstice_glyph::VerticalAlign::Center,
                             VerticalAlignment::Bottom => solstice_glyph::VerticalAlign::Bottom,
                         }),
-                    ..Default::default()
                 };
 
                 self.text_pipeline.queue(text);
@@ -175,6 +175,19 @@ impl backend::Text for Backend {
 
     fn measure(&self, contents: &str, size: f32, font: Font, bounds: Size) -> (f32, f32) {
         self.text_pipeline.measure(contents, size, font, bounds)
+    }
+
+    fn hit_test(
+        &self,
+        contents: &str,
+        size: f32,
+        font: Font,
+        bounds: Size,
+        point: Point,
+        nearest_only: bool,
+    ) -> Option<Hit> {
+        self.text_pipeline
+            .hit_test(contents, size, font, bounds, point, nearest_only)
     }
 }
 

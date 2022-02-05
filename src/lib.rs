@@ -18,7 +18,7 @@ mod triangle;
 
 pub mod settings;
 pub mod widget;
-pub mod window;
+// pub mod window;
 
 pub use backend::Backend;
 pub use settings::Settings;
@@ -30,7 +30,8 @@ pub use widget::*;
 
 pub use iced_graphics::{Error, Viewport};
 pub use iced_native::{
-    Background, Color, Command, HorizontalAlignment, Length, Vector, VerticalAlignment,
+    alignment::{Horizontal as HorizontalAlignment, Vertical as VerticalAlignment},
+    Background, Color, Command, Length, Vector,
 };
 
 /// A [`glow`] graphics renderer for [`iced`].

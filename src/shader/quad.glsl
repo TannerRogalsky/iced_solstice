@@ -72,7 +72,7 @@ void main() {
     vec2 fragCoord = vec2(gl_FragCoord.x, u_ScreenHeight - gl_FragCoord.y);
 
     // TODO: Remove branching (?)
-    if(v_BorderWidth > 0) {
+    if(v_BorderWidth > 0.0) {
         float internal_border = max(v_BorderRadius - v_BorderWidth, 0.0);
 
         float internal_distance = distance(

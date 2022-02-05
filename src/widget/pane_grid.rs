@@ -23,10 +23,10 @@ pub use iced_graphics::pane_grid::{
 /// [![Pane grid - Iced](https://thumbs.gfycat.com/MixedFlatJellyfish-small.gif)](https://gfycat.com/mixedflatjellyfish)
 ///
 /// This is an alias of an `iced_native` pane grid with an `iced_wgpu::Renderer`.
-pub type PaneGrid<'a, Message> = iced_native::PaneGrid<'a, Message, Renderer>;
+pub type PaneGrid<'a, Message> = iced_native::widget::PaneGrid<'a, Message, Renderer>;
 
 /// The content of a [`Pane`].
-pub type Content<'a, Message> = iced_native::pane_grid::Content<'a, Message, Renderer>;
+pub type Content<'a, Message> = iced_native::widget::pane_grid::Content<'a, Message, Renderer>;
 
 /// The title bar of a [`Pane`].
-pub type TitleBar<'a, Message> = iced_native::pane_grid::TitleBar<'a, Message, Renderer>;
+pub type TitleBar<'a, Message> = iced_native::widget::pane_grid::TitleBar<'a, Message, Renderer>;
